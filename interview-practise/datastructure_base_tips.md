@@ -150,7 +150,7 @@ def quick_sort(array, begin, end):
             right -= 1
         array[left] = array[right]
 
-        # 找到左边比 pivot 大的
+        # 找到左边比 pivot 小的
         while left < right and pivot >= array[left]:
             left += 1
         array[right] = array[left]
