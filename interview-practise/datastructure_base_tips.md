@@ -137,41 +137,27 @@ def quicksort(array: list):
 # 谁找到了就停下，没找的继续往左/右挪，直到 l == r, 然后将 pivot 与 l(r) 指向的元素交换
 # 递归重复上面步骤即可
 
-def quicksort_v2(array: list, begin: int, end: int) -> None:
-    """
-    	升序 + 左指针找大 + 右指针找小的, 右边的指针先动
-    	注意处理 [2, 4, 3] 的情况
-    """
-    
+def quick_sort(array, begin, end):
     if begin >= end:
-        return 
-
-    pivot_idx = begin
-    pivot = array[pivot_idx]
-
-    left, right = begin + 1, end
-
-    while True:
-        while left < right and array[right] > pivot:
-            right = right - 1
-        
-        while left < right or array[left] < pivot:
-            left = left + 1
-
-        if left == right:
-            break
-	    
-        array[left], array[right] = array[right], array[left]
+        return list
     
-    flag = False
-    if array[pivot_idx] > array[left]:
-        array[pivot_idx], array[left] = array[left], array[pivot_idx]
-        flag = True
+    pivot = array[begin]
+    left, right = begin, end
 
-    # 左边数组快排
-    quicksort_v2(array, begin, left-1)
-    # 右边数组快排
-    quicksort_v2(array, left+1 if flag else left, end)
+    while left < right:
+        # 找到右边比 pivot 大的
+        while left < right and pivot <= array[right]:
+            right -= 1
+        array[left] = array[right]
+
+        # 找到左边比 pivot 大的
+        while left < right and pivot >= array[left]:
+            left += 1
+        array[right] = array[left]
+    
+    array[left] = pivot
+    quick_sort(array, begin, left-1)
+    quick_sort(array, left+1, end)
 ```
 
 ### 2. 查找算法
@@ -357,44 +343,3 @@ py2 和 py3 中，dict 的 `items()`、`keys()`、`values()` 的返回时不同�
 ### 5. 集合 Set
 
 如果让你自己实现一个 Set 呢？一样可以使用 hash table，只要将 value 设置为 1 即可。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
